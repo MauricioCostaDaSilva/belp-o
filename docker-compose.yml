@@ -1,29 +1,28 @@
-name: belpao
-
 networks:
   internal:
     driver: bridge
 
 volumes:
-  postgres-storage:
+  mysql-data:
     driver: local
 
 services:
-  postgres:
-    image: postgres:17
+  mysql:
+    image: mysql:8.0
     restart: unless-stopped
     environment:
-      POSTGRES_DB: belpao
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: belpao
+      MYSQL_USER: belpao
+      MYSQL_PASSWORD: belpao
     volumes:
-      - postgres-storage:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+      #- ./bd:/docker-entrypoint-initdb.d  # Caminho correto para o SQL
+      - mysql-data:/var/lib/mysql
     ports:
-      - 5432:5432
+      - 3306:3306/tcp
     networks:
       - internal
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      timeout: 10s
+      retries: 5

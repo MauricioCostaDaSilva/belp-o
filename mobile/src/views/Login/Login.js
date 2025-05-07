@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, Text, View } from 'react-native'
+import { SafeAreaView, Text, View, ImageBackground } from 'react-native'
 import { Appbar, Button, TextInput } from 'react-native-paper'
 import { getToken } from '../../api'
 
@@ -40,9 +40,9 @@ const Login = (props) => {
   }
 
   if (isAuthenticated) {
-    return (
+    return 
       <>{props.children}</>
-    )
+    
   }
 
   return (
@@ -50,6 +50,13 @@ const Login = (props) => {
       <Appbar.Header>
         <Appbar.Content title="Entrar" />
       </Appbar.Header>
+      
+      <ImageBackground
+        source={require('../../assets/fundo.jpeg')} 
+        style={{ flex: 1 }}
+        resizeMode="cover"
+      ></ImageBackground>
+
       <SafeAreaView style={{ flex: 1 }}>
         <View style={{ flex: 1, marginTop: 20, padding: 20 }}>
         <Text style={{ textAlign: 'center'}}>

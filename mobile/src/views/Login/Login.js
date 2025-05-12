@@ -40,69 +40,66 @@ const Login = (props) => {
   }
 
   if (isAuthenticated) {
-    return 
-      <>{props.children}</>
-    
+    return <>{props.children}</>
   }
 
   return (
     <>
-        <Appbar.Header>
-        
-        </Appbar.Header>
-  
-       <ImageBackground
-    source={require('../../../assets/fundo.jpeg')}
-    style={{
-      width: '100%',
-      height: 200,
-      borderBottomLeftRadius: 20,
-      borderBottomRightRadius: 20,
-     overflow: 'hidden'
-    }}
-    imageStyle={{
-    
-      borderBottomLeftRadius: 20,
-      borderBottomRightRadius: 20,
-    }}
-  />
-  
-        <SafeAreaView style={{ flex: 1 }}>
-          <View style={{ flex: 1, padding: 20 }}>
-            <TextInput
-              mode="outlined"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              label="Informe seu endereço de e-mail"
-              disabled={loading}
-              value={username}
-              onChangeText={setUsername}
-              style={{ marginBottom: 15, backgroundColor: 'white' }}
-              theme={{ roundness: 30 }}
-            />
-            <TextInput
-              mode="outlined"
-              label="Informe sua senha"
-              secureTextEntry
-              disabled={loading}
-              value={password}
-              onChangeText={setPassword}
-              style={{ marginBottom: 15, backgroundColor: 'white' }}
-              theme={{ roundness: 30 }}
-            />
-            <Button
-              mode="contained"
-              onPress={handleLogin}
-              loading={loading}
-              disabled={loading}
-              style={{ borderRadius: 30 }}
-            >
-              Entrar
-            </Button>
-          </View>
-        </SafeAreaView>
-      </>
-    );
-  };
-  
-  export default Login;
+      <ImageBackground
+        source={require('../../../assets/fundo.jpeg')}
+        style={{
+          width: '100%',
+          height: 250,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      />
+
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+        <View
+          style={{
+            flex: 1,
+            marginTop: -40,
+            backgroundColor: 'white',
+            borderTopLeftRadius: 30,
+            borderTopRightRadius: 30,
+            padding: 20,
+          }}
+        >
+          <TextInput
+            mode="outlined"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            label="Informe seu endereço de e-mail"
+            disabled={loading}
+            value={username}
+            onChangeText={setUsername}
+            style={{ marginBottom: 15, backgroundColor: 'white' }}
+            theme={{ roundness: 30 }}
+          />
+          <TextInput
+            mode="outlined"
+            label="Informe sua senha"
+            secureTextEntry
+            disabled={loading}
+            value={password}
+            onChangeText={setPassword}
+            style={{ marginBottom: 15, backgroundColor: 'white' }}
+            theme={{ roundness: 30 }}
+          />
+          <Button
+            mode="contained"
+            onPress={handleLogin}
+            loading={loading}
+            disabled={loading}
+            style={{ borderRadius: 30, backgroundColor: '#9D735A' }}
+          >
+            Entrar
+          </Button>
+        </View>
+      </SafeAreaView>
+    </>
+  )
+}
+
+export default Login

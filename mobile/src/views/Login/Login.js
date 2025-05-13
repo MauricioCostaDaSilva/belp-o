@@ -4,7 +4,7 @@ import { SafeAreaView, Text, View, ImageBackground } from 'react-native'
 import { Appbar, Button, TextInput } from 'react-native-paper'
 import { getToken } from '../../api'
 
-const Login = (props) => {
+const Login = ({ navigation, ...props}) => {
   const [loading, setLoading] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [username, setUsername] = useState("")
@@ -96,6 +96,17 @@ const Login = (props) => {
           >
             Entrar
           </Button>
+
+          
+          <View style={{ flexDirection: 'row', marginTop: 20, justifyContent: 'center' }}>
+            <Text style={{ fontSize: 14 }}>Novo usuário? </Text>
+            <Text
+              style={{ color: '#9D735A', fontWeight: 'bold', fontSize: 14 }}
+              onPress={() => navigation.navigate('Cadastro')}
+            >
+              Clique aqui
+            </Text>
+          </View>
         </View>
       </SafeAreaView>
     </>

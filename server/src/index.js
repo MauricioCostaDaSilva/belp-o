@@ -1,7 +1,7 @@
 import cors from 'cors'
 import express from 'express'
 import jwt from 'jsonwebtoken'
-import console from 'node:console'
+import console, { error } from 'node:console'
 import process from 'node:process'
 import swaggerJsDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
@@ -140,7 +140,7 @@ app.post('/token', async (req, response) => {
 
   // consulta o banco de dados buscando o usuário e a senha
   const [results] = await queryBuilder.raw(`
-    SELECT * FROM usuario WHERE email = ? AND senha = ? LIMIT 1 
+    SELECT * FROM usuario WHERE email = ? AND senha = ? LIMIT 1
   `, [username, password])
 
   // Verifica se retornou algum resultado, caso contrário retorna erro
@@ -162,6 +162,60 @@ app.post('/token', async (req, response) => {
   response
     .status(200)
     .json({ token, usuario })
+})
+
+//criação do endpoint do tipo post
+
+app.post('/cadastro', async (req, response) => {
+  const { nome, senha, email, telefone } = req.body
+
+  // Verifica se os campos estão preenchidos
+  if (!nome) {
+    return response
+      .status(400)
+      .json({ error: 'Nome é um campo obrigatório.' })
+  }
+
+  if (!senha) {
+    return response
+      .status(400)
+      .json({ error: 'Senha é um campo obrigatório.' })
+  }
+
+  if (!email) {
+    return response
+      .status(400)
+      .json({ error: 'Email é um campo obrigatório.' })
+  }
+
+  if (!telefone) {
+    return response
+      .status(400)
+      .json({ error: 'Telefone é um campo obrigatório.' })
+  }
+
+  //trataviva de erro
+try {
+
+  // Alimenta o banco com os dados cadastrados
+  const [results] = await queryBuilder.raw(`
+    INSERT INTO usuario (nome, senha, email, telefone) VALUES (?, ?, ?, ?)
+  `, [nome, senha, email, telefone])
+
+  // Verifica se retornou algum resultado, caso contrário retorna erro
+
+     response
+      .status(201)
+      .json({ insertId: results.insertId })
+
+}
+//trataviva de erro
+catch{
+  response
+      .status(500)
+      .json({ error: "Falha ao cadstrar usuário, verifique se todos os campos foram preenchidos." })
+
+}
 })
 
 app.listen(PORT, () => {

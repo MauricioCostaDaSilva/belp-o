@@ -28,6 +28,27 @@ export async function getToken (username, password) {
   return await response.json()
 }
 
+export async function cadastro (nome, senha, email, telefone) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ nome, senha, email, telefone })
+  }
+
+  baseURL.pathname = "/cadastro"
+
+  const response = await fetch(baseURL, requestOptions)
+
+  if (response.status !== 201) {
+    return Promise.reject(new Error("Erro ao criar a conta."))
+  }
+
+  return await response.json()
+}
+
 export async function getProdutos () {
   return Promise.resolve([
     {

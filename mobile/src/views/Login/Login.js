@@ -1,10 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SafeAreaView, Text, View, ImageBackground } from 'react-native'
 import { Appbar, Button, TextInput } from 'react-native-paper'
+import { useNavigate } from 'react-router-native'
 import { getToken } from '../../api'
 
 const Login = ({ navigation, ...props}) => {
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [username, setUsername] = useState("")
@@ -97,12 +99,12 @@ const Login = ({ navigation, ...props}) => {
             Entrar
           </Button>
 
-          
+
           <View style={{ flexDirection: 'row', marginTop: 20, justifyContent: 'center' }}>
             <Text style={{ fontSize: 14 }}>Novo usuário? </Text>
             <Text
               style={{ color: '#9D735A', fontWeight: 'bold', fontSize: 14 }}
-              onPress={() => navigation.navigate('Cadastro')}
+              onPress={() => navigate('/Cadastro')}
             >
               Clique aqui
             </Text>

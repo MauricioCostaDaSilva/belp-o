@@ -43,19 +43,17 @@ const SignIn = () => {
       <Text style={styles.title}>Cadastro</Text>
 
       <TextInput
-        label="Usuário"
+        label="Digite seu nome"
         value={nome}
         onChangeText={setNome}
-        placeholder="Digite seu nome"
         style={styles.input}
         mode="outlined"
       />
 
       <TextInput
-        label="Email"
+        label="Digite seu email"
         value={email}
         onChangeText={setEmail}
-        placeholder="Digite seu email"
         style={styles.input}
         mode="outlined"
         keyboardType="email-address"
@@ -63,20 +61,18 @@ const SignIn = () => {
       />
 
       <TextInput
-        label="Senha"
+        label="Digite sua senha"
         value={senha}
         onChangeText={setSenha}
-        placeholder="Digite sua senha"
         style={styles.input}
         mode="outlined"
         secureTextEntry
       />
 
       <TextInput
-        label="Telefone"
+        label="Digite seu Telefone"
         value={telefone}
         onChangeText={setTelefone}
-        placeholder="Digite sua senha"
         style={styles.input}
         mode="outlined"
         secureTextEntry

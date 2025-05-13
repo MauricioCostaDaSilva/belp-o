@@ -9,18 +9,32 @@ flowchart LR
 ````
 
 
-## Get started
+# 📱 Componente de Login - React Native
 
-1. Install dependencies
+Este componente implementa uma tela de login com autenticação via API, utilizando `AsyncStorage` para armazenar o token localmente. Caso o usuário já esteja autenticado, o conteúdo filho é exibido. Caso contrário, o formulário de login é apresentado.
 
-   ```bash
-   npm install
-   ```
+## ✨ Funcionalidades
 
-2. Start the app
+- Autenticação via API (`getToken`)
+- Armazenamento do token com `@react-native-async-storage/async-storage`
+- Redirecionamento automático se o token já estiver salvo
+- Interface moderna com `react-native-paper`
+- Link para cadastro de novos usuários
 
-   ```bash
-    npx expo start
-   ```
+## 📦 Dependências
+
+Certifique-se de ter as seguintes bibliotecas instaladas:
+
+```bash
+npm install @react-native-async-storage/async-storage react-native-paper react-router-native
+
+src/
+├── api/
+│   └── index.js         # Contém a função getToken()
+├── components/
+│   └── Login.js         # Este componente
+assets/
+└── fundo.jpeg           # Imagem de fundo usada no topo
+
 
 

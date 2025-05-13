@@ -57,4 +57,4 @@ CREATE TABLE `pedido_produtos` (
   KEY `produto` (`produto`),
   CONSTRAINT `pedido_produtos_ibfk_1` FOREIGN KEY (`pedido`) REFERENCES `pedido` (`id`) ON DELETE CASCADE,
   CONSTRAINT `pedido_produtos_ibfk_2` FOREIGN KEY (`produto`) REFERENCES `produto` (`id`) ON DELETE CASCADE
-);
+)

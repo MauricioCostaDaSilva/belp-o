@@ -16,7 +16,7 @@ import { cadastro } from '../../api'
  * @link https://react-styleguidist.js.org/docs/documenting.html
  */
 const SignIn = () => {
-  const navigate = useNavigate()
+ 
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
@@ -38,7 +38,8 @@ const SignIn = () => {
 
   }
 
-  return (
+  return (  
+    
     <View style={styles.container}>
       <Text style={styles.title}>Cadastro</Text>
 
@@ -46,7 +47,9 @@ const SignIn = () => {
         label="Digite seu nome"
         value={nome}
         onChangeText={setNome}
-        style={styles.input}
+        style={{marginBottom: 15, backgroundColor: 'white', padding: 20, }}
+       theme={{ roundness: 30 }}
+            
         mode="outlined"
       />
 
@@ -58,6 +61,7 @@ const SignIn = () => {
         mode="outlined"
         keyboardType="email-address"
         autoCapitalize="none"
+        theme={{ roundness: 30 }}
       />
 
       <TextInput
@@ -67,6 +71,7 @@ const SignIn = () => {
         style={styles.input}
         mode="outlined"
         secureTextEntry
+        theme={{ roundness: 30 }}
       />
 
       <TextInput
@@ -76,6 +81,7 @@ const SignIn = () => {
         style={styles.input}
         mode="outlined"
         secureTextEntry
+        theme={{ roundness: 30 }}
       />
 
         <Button mode="contained" onPress={onPress} style={styles.button}>
@@ -103,11 +109,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   input: {
-    marginBottom: 16,
+    marginBottom: 15,
+    backgroundColor: 'white',
+    padding: 20,
   },
   button: {
     marginTop: 16,
   },
 })
 
+
 export default SignIn
+

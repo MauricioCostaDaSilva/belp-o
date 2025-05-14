@@ -16,7 +16,8 @@ import { cadastro } from '../../api'
  * @link https://react-styleguidist.js.org/docs/documenting.html
  */
 const SignIn = () => {
- 
+  const navigate = useNavigate()
+
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
@@ -38,8 +39,8 @@ const SignIn = () => {
 
   }
 
-  return (  
-    
+  return (
+
     <View style={styles.container}>
       <Text style={styles.title}>Cadastro</Text>
 
@@ -49,7 +50,7 @@ const SignIn = () => {
         onChangeText={setNome}
         style={{marginBottom: 15, backgroundColor: 'white', padding: 20, }}
        theme={{ roundness: 30 }}
-            
+
         mode="outlined"
       />
 

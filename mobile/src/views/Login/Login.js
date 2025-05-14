@@ -51,7 +51,7 @@ const Login = ({ navigation, ...props}) => {
         source={require('../../../assets/fundo.jpeg')}
         style={{
           width: '100%',
-          height: 250,
+          height: 500,
           justifyContent: 'center',
           alignItems: 'center',
         }}
@@ -76,7 +76,9 @@ const Login = ({ navigation, ...props}) => {
             disabled={loading}
             value={username}
             onChangeText={setUsername}
-            style={{ marginBottom: 15, backgroundColor: 'white' }}
+            style={{ marginBottom: 15,
+                    marginTop: 15,
+                     backgroundColor: 'white' }}
             theme={{ roundness: 30 }}
           />
           <TextInput
@@ -89,15 +91,22 @@ const Login = ({ navigation, ...props}) => {
             style={{ marginBottom: 15, backgroundColor: 'white' }}
             theme={{ roundness: 30 }}
           />
-          <Button
-            mode="contained"
+          <View style={{ alignItems: 'center', marginTop: 10 }}>
+        <Button
+             mode="contained"
             onPress={handleLogin}
             loading={loading}
             disabled={loading}
-            style={{ borderRadius: 30, backgroundColor: '#9D735A' }}
-          >
-            Entrar
-          </Button>
+            style={{
+                    borderRadius: 30,
+                    backgroundColor: '#9D735A',
+                    width: 300,
+                    height: 40,
+                  }}
+              >
+                Entrar
+            </Button>
+              </View>
 
 
           <View style={{ flexDirection: 'row', marginTop: 20, justifyContent: 'center' }}>

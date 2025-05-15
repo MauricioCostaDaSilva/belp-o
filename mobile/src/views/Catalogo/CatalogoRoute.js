@@ -106,6 +106,7 @@ export default function CatalogoRoute() {
                   {isInCarrinho ? 'Adicionar' : `Adicionar            R$ ${produto.preco.toFixed(2)}`}
                 </Button>
               </Card.Actions>
+
             </Card>
           )
         })}
@@ -120,8 +121,11 @@ export default function CatalogoRoute() {
             labelStyle={{ fontWeight: 'bold' }}
           >
             Carrinho ({carrinho.reduce((total, item) => total + item.quantidade, 0)})
+
           </Button>
+
         </View>
+
       )}
       <BottomSheet
         visible={carrinhoVisible}
@@ -133,10 +137,21 @@ export default function CatalogoRoute() {
             Carrinho
           </Text>
           {carrinho.map(item => (
-            <View key={item.id} style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
-              <Text>{item.nome}</Text>
-              <Text>{item.quantidade} x R$ {item.preco.toFixed(2)}</Text>
+
+            <View style={{
+              borderRadius: 30,
+              backgroundColor: '#9D735A',
+              width: 100,
+              height: 40, left: 240
+            }}>
+              <Button
+
+                onPress={() => alert('Outro botão clicado!')}
+              > Pagamento({carrinho.reduce((total, item) => total + item.quantidade, 0)})
+
+              </Button>
             </View>
+
           ))}
           <View style={{ padding: 10 }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold' }}>

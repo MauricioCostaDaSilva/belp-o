@@ -2,11 +2,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useEffect, useState } from 'react'
 import { SafeAreaView, Text, View, ImageBackground, ScrollView, StyleSheet } from 'react-native'
 import { Appbar, Button, TextInput } from 'react-native-paper'
-import { useNavigate } from 'react-router-native'
+import { useNavigate, Outlet } from 'react-router-native'
 import { getToken } from '../../api'
 
 
-const Login = ({ navigation, ...props}) => {
+const Login = ({ navigation, children }) => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -43,7 +43,9 @@ const Login = ({ navigation, ...props}) => {
   }
 
   if (isAuthenticated) {
-    return <>{props.children}</>
+    return (
+      <Outlet />
+    )
   }
 
   return (
@@ -54,9 +56,7 @@ const Login = ({ navigation, ...props}) => {
       />
 
       <SafeAreaView >
-        <View
-          style={styles.formContainer}
-        >
+        <View style={styles.formContainer}>
           <TextInput
             mode="outlined"
             keyboardType="email-address"
@@ -90,8 +90,6 @@ const Login = ({ navigation, ...props}) => {
                 Entrar
             </Button>
               </View>
-
-
           <View style={styles.linkContainer}>
             <Text style={styles.textFooter}>Novo usuário? </Text>
             <Text
@@ -119,7 +117,7 @@ const styles = StyleSheet.create({
   backgroundColor: 'white',
   },
   senhaInput: {
-     marginBottom: 15, 
+     marginBottom: 15,
      backgroundColor: 'white',
   },
   formContainer: {
@@ -131,7 +129,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   buttonContainer: {
-    alignItems: 'center', 
+    alignItems: 'center',
     marginTop: 10,
   },
   button:{
@@ -141,22 +139,22 @@ const styles = StyleSheet.create({
      height: 40,
   },
   buttonLabel: {
-    fontSize: 20, 
-    fontWeight: 'bold', 
+    fontSize: 20,
+    fontWeight: 'bold',
     color: 'white',
   },
   linkContainer: {
-    flexDirection: 'row', 
-    marginTop: 15, 
+    flexDirection: 'row',
+    marginTop: 15,
     justifyContent: 'center'
   },
   textFooter: {
     fontSize: 14,
   },
   linkFooter: {
-    color: '#9D735A', 
-    fontWeight: 'bold', 
-    fontSize: 14 
+    color: '#9D735A',
+    fontWeight: 'bold',
+    fontSize: 14
   },
 })
 export default Login

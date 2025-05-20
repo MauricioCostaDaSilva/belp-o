@@ -2,11 +2,11 @@
 USE belpao;
 
 CREATE TABLE `usuario` (
-  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE KEY,
-  `email` VARCHAR(255) NOT NULL UNIQUE KEY,
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `email` VARCHAR(255) NOT NULL UNIQUE,
   `senha` VARCHAR(255) NOT NULL,
   `nome` VARCHAR(255) NOT NULL,
-  `telefone` VARCHAR(20) NOT NULL UNIQUE KEY,
+  `telefone` VARCHAR(20) NOT NULL UNIQUE,
   `perfil` ENUM('adm', 'cliente') NOT NULL DEFAULT 'cliente'
 );
 
@@ -24,17 +24,16 @@ CREATE TABLE `endereco` (
 );
 
 CREATE TABLE `produto` (
-  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE KEY,
-  `nome` varchar(255) NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `categoria` VARCHAR(150) NOT NULL,
+  `nome` VARCHAR(255) NOT NULL,
   `descricao` TEXT NOT NULL,
-  `preco` decimal(10, 2) NOT NULL,
-  `categoria` varchar(150) NOT NULL,
-  `imagem` longblob,
-  `status` ENUM('ativo', 'inativo') NOT NULL DEFAULT 'ativo'
+  `valor` DECIMAL(10, 2) NOT NULL,
+  `imagem` LONGBLOB
 );
 
 CREATE TABLE `pedido` (
-  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE KEY,
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `usuario` INT DEFAULT NULL,
   `endereco` INT DEFAULT NULL,
   `tipo_pagamento` ENUM('dinheiro', 'pix', 'credito', 'debito', 'ticket') NOT NULL DEFAULT 'dinheiro',
@@ -47,7 +46,7 @@ CREATE TABLE `pedido` (
 );
 
 CREATE TABLE `pedido_produtos` (
-  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE KEY,
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `pedido` int DEFAULT NULL,
   `produto` int DEFAULT NULL,
   `quantidade` int NOT NULL,

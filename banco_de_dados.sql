@@ -25,11 +25,13 @@ CREATE TABLE `endereco` (
 
 CREATE TABLE `produto` (
   `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `usuario_id` INT DEFAULT NULL,
   `categoria` VARCHAR(150) NOT NULL,
   `nome` VARCHAR(255) NOT NULL,
   `descricao` TEXT NOT NULL,
   `valor` DECIMAL(10, 2) NOT NULL,
-  `imagem` LONGBLOB
+  `imagem` LONGBLOB,
+  CONSTRAINT `fk_usuario_produto` FOREIGN KEY (`usuario_id`) REFERENCES `usuario`(`id`) ON DELETE SET NULL
 );
 
 CREATE TABLE `pedido` (
@@ -56,4 +58,4 @@ CREATE TABLE `pedido_produtos` (
   KEY `produto` (`produto`),
   CONSTRAINT `pedido_produtos_ibfk_1` FOREIGN KEY (`pedido`) REFERENCES `pedido` (`id`) ON DELETE CASCADE,
   CONSTRAINT `pedido_produtos_ibfk_2` FOREIGN KEY (`produto`) REFERENCES `produto` (`id`) ON DELETE CASCADE
-)
+);

@@ -128,6 +128,8 @@ app.get('/health', async (req, response) => {
  *                   type: string
  *                   example: Usuário ou senha inválidos
  */
+
+
 app.post('/token', async (req, response) => {
   const { username, password } = req.body
 
@@ -150,6 +152,7 @@ app.post('/token', async (req, response) => {
       .json({ error: 'Usuário ou senha inválidos' })
   }
 
+
   const usuario = results[0]
   // remove a senha do usuário antes de retornar os dados para evitar que ela seja exposta
   delete usuario.senha
@@ -164,7 +167,52 @@ app.post('/token', async (req, response) => {
     .json({ token, usuario })
 })
 
-//criação do endpoint do tipo post
+ app.get('/catalogo', (request, response) => {
+  response.json([
+    {
+      id: 1,
+      nome: 'Pão Francês',
+      descricao: 'Unidade de pão francês quentinho e crocante',
+      preco: 1.0,
+      categoria: 'Pães',
+      imagem: 'https://s2-receitas.glbimg.com/-V4nFrbjz9JMuWJnvQxl2NEplg8=/0x0:1280x922/924x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_e84042ef78cb4708aeebdf1c68c6cbd6/internal_photos/bs/2020/U/q/B5doHYQcKDxm0YsOynPA/pao-frances.jpeg',
+    },
+    {
+      id: 2,
+      nome: 'Pão de Queijo',
+      descricao: 'Unidade de pão de queijo quentinho e crocante',
+      preco: 1.0,
+      categoria: 'Pães',
+      imagem: 'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcT72_HdETtIyypzEJVgaPWZLVgppfM3ZHQVNlVw6odza8j_92-QaYQNLjClh_2MzxR0NqhK',
+    },
+    {
+      id: 3,
+      nome: 'Bolo de Cenoura',
+      descricao: 'Fatia de bolo de cenoura com cobertura de chocolate',
+      preco: 5.0,
+      categoria: 'Doces',
+      imagem: 'https://i.ytimg.com/vi/L1czIgvo3-I/maxresdefault.jpg',
+    },
+    {
+      id: 4,
+      nome: 'Bolo de Chocolate',
+      descricao: 'Fatia de Bolo de chocolate com cobertura de chocolate',
+      preco: 5.0,
+      categoria: 'Doces',
+      imagem: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3zaXkuP720aNAu-sn7UU1p71XaTlGGMCf5A&s',
+    },
+    {
+      id: 5,
+      nome: 'Torta de Limão',
+      descricao: 'Fatia de Torta de limão com merengue',
+      preco: 5.0,
+      categoria: 'Doces',
+      imagem: 'https://recipesblob.oetker.com.br/assets/d044a4ef3cfe45998593f500c00942ef/1272x764/torta-de-limo.jpg',
+    }
+  ])
+ })
+
+//criação do endpoint do tipo post para cadastro
 
 app.post('/cadastro', async (req, response) => {
   const { nome, senha, email, telefone } = req.body

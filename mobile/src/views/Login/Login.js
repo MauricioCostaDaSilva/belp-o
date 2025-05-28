@@ -1,11 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useEffect, useState } from 'react'
-import { SafeAreaView, Text, View, ImageBackground } from 'react-native'
+import { SafeAreaView, Text, View, ImageBackground, ScrollView, StyleSheet } from 'react-native'
 import { Appbar, Button, TextInput } from 'react-native-paper'
-import { useNavigate } from 'react-router-native'
+import { useNavigate, Outlet } from 'react-router-native'
 import { getToken } from '../../api'
 
-const Login = ({ navigation, ...props}) => {
+
+const Login = ({ navigation, children }) => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -42,32 +43,20 @@ const Login = ({ navigation, ...props}) => {
   }
 
   if (isAuthenticated) {
-    return <>{props.children}</>
+    return (
+      <Outlet />
+    )
   }
 
   return (
-    <>
+    <ScrollView>
       <ImageBackground
         source={require('../../../assets/fundo.jpeg')}
-        style={{
-          width: '100%',
-          height: 250,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+        style={styles.ImageBackground}
       />
 
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-        <View
-          style={{
-            flex: 1,
-            marginTop: -40,
-            backgroundColor: 'white',
-            borderTopLeftRadius: 30,
-            borderTopRightRadius: 30,
-            padding: 20,
-          }}
-        >
+      <SafeAreaView >
+        <View style={styles.formContainer}>
           <TextInput
             mode="outlined"
             keyboardType="email-address"
@@ -76,7 +65,7 @@ const Login = ({ navigation, ...props}) => {
             disabled={loading}
             value={username}
             onChangeText={setUsername}
-            style={{ marginBottom: 15, backgroundColor: 'white' }}
+            style={styles.emailInput}
             theme={{ roundness: 30 }}
           />
           <TextInput
@@ -86,33 +75,86 @@ const Login = ({ navigation, ...props}) => {
             disabled={loading}
             value={password}
             onChangeText={setPassword}
-            style={{ marginBottom: 15, backgroundColor: 'white' }}
+            style={styles.senhaInput}
             theme={{ roundness: 30 }}
           />
-          <Button
-            mode="contained"
+          <View style={styles.buttonContainer}>
+        <Button
+             mode="contained"
             onPress={handleLogin}
             loading={loading}
             disabled={loading}
-            style={{ borderRadius: 30, backgroundColor: '#9D735A' }}
-          >
-            Entrar
-          </Button>
-
-
-          <View style={{ flexDirection: 'row', marginTop: 20, justifyContent: 'center' }}>
-            <Text style={{ fontSize: 14 }}>Novo usuário? </Text>
+            style={styles.button}
+                  labelStyle={styles.buttonLabel}
+              >
+                Entrar
+            </Button>
+              </View>
+          <View style={styles.linkContainer}>
+            <Text style={styles.textFooter}>Novo usuário? </Text>
             <Text
-              style={{ color: '#9D735A', fontWeight: 'bold', fontSize: 14 }}
-              onPress={() => navigate('/Cadastro')}
+              style={styles.linkFooter}
+              onPress={() => navigate('/cadastro')}
             >
-              Clique aqui
+              Cadastre-se
             </Text>
           </View>
         </View>
       </SafeAreaView>
-    </>
+    </ScrollView>
   )
 }
-
+const styles = StyleSheet.create({
+  ImageBackground: {
+    width: '100%',
+    height: 500,
+    justifyContent: 'center',
+     alignItems: 'center',
+  },
+  emailInput: {
+  marginBottom: 15,
+  marginTop: 15,
+  backgroundColor: 'white',
+  },
+  senhaInput: {
+     marginBottom: 15,
+     backgroundColor: 'white',
+  },
+  formContainer: {
+    flex: 1,
+    marginTop: -40,
+    backgroundColor: 'white',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    padding: 20,
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  button:{
+     borderRadius: 30,
+     backgroundColor: '#9D735A',
+     width: 250,
+     height: 40,
+  },
+  buttonLabel: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  linkContainer: {
+    flexDirection: 'row',
+    marginTop: 15,
+    justifyContent: 'center'
+  },
+  textFooter: {
+    fontSize: 14,
+  },
+  linkFooter: {
+    color: '#9D735A',
+    fontWeight: 'bold',
+    fontSize: 14
+  },
+})
 export default Login

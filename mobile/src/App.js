@@ -5,6 +5,9 @@ import themeJSON from './theme.json'
 import Catalogo from './views/Catalogo/Catalogo'
 import Login from './views/Login/Login'
 import SignIn from './views/SignIn/SignIn'
+import Pagamento from './views/Carrinho/Pagamento/Pagamento'
+import Informacoes from './views/Catalogo/Informacoes'
+
 
 const theme = {
   ...DefaultTheme,
@@ -23,6 +26,8 @@ export default function App() {
           <Route path='/cadastro' element={<SignIn />} />
           <Route path='/' element={<Login />}>
             <Route index element={<Catalogo />} />
+            <Route path='/pagamento' element={<Pagamento/>} />
+            <Route path='/informações' element={<Informacoes/>} />
           </Route>
         </Routes>
         <StatusBar style="auto" />

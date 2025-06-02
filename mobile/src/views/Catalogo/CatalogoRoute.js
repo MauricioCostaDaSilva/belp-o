@@ -3,6 +3,7 @@ import { ScrollView, Text, View } from 'react-native'
 import { BottomSheet } from "react-native-btr"
 import { Appbar, Button, Card, Searchbar } from 'react-native-paper'
 import { getProdutos } from '../../api'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function CatalogoRoute() {
   const [produtos, setProdutos] = useState([])
@@ -10,22 +11,27 @@ export default function CatalogoRoute() {
   const [carrinhoVisible, setCarrinhoVisible] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
 
-  const addToCarrinho = (produto) => {
+  const addToCarrinho = async (produto) => {
     const produtoExistente = carrinho.find(item => item.id === produto.id)
     if (produtoExistente) {
       setCarrinho(carrinho.map(item => item.id === produto.id ? { ...item, quantidade: item.quantidade + 1 } : item))
     } else {
       setCarrinho([...carrinho, { ...produto, quantidade: 1 }])
     }
+    await AsyncStorage.setItem('carrinho', JSON.stringify(carrinho))
+
+
   }
 
-  const removeFromCarrinho = (produto) => {
+  const removeFromCarrinho = async (produto) => {
     const produtoExistente = carrinho.find(item => item.id === produto.id)
     if (produtoExistente.quantidade > 1) {
       setCarrinho(carrinho.map(item => item.id === produto.id ? { ...item, quantidade: item.quantidade - 1 } : item))
     } else {
       setCarrinho(carrinho.filter(item => item.id !== produto.id))
     }
+     await AsyncStorage.setItem('carrinho', JSON.stringify(carrinho))
+
   }
 
   const toggleCarrinhoVisible = () => {
@@ -106,7 +112,6 @@ export default function CatalogoRoute() {
                   {isInCarrinho ? 'Adicionar' : `Adicionar            R$ ${produto.preco.toFixed(2)}`}
                 </Button>
               </Card.Actions>
-
             </Card>
           )
         })}
@@ -121,37 +126,25 @@ export default function CatalogoRoute() {
             labelStyle={{ fontWeight: 'bold' }}
           >
             Carrinho ({carrinho.reduce((total, item) => total + item.quantidade, 0)})
-
           </Button>
 
         </View>
-
       )}
       <BottomSheet
         visible={carrinhoVisible}
         onBackButtonPress={toggleCarrinhoVisible}
         onBackdropPress={toggleCarrinhoVisible}
       >
+
         <View style={{ backgroundColor: '#fff', padding: 20 }}>
           <Text style={{ fontSize: 18, fontWeight: 'bold', padding: 10 }}>
             Carrinho
           </Text>
           {carrinho.map(item => (
-
-            <View style={{
-              borderRadius: 30,
-              backgroundColor: '#9D735A',
-              width: 100,
-              height: 40, left: 240
-            }}>
-              <Button
-
-                onPress={() => alert('Outro botão clicado!')}
-              > Pagamento({carrinho.reduce((total, item) => total + item.quantidade, 0)})
-
-              </Button>
+            <View key={item.id} style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
+              <Text>{item.nome}</Text>
+              <Text>{item.quantidade} x R$ {item.preco.toFixed(2)}</Text>
             </View>
-
           ))}
           <View style={{ padding: 10 }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
@@ -161,5 +154,6 @@ export default function CatalogoRoute() {
         </View>
       </BottomSheet>
     </>
+
   )
 }

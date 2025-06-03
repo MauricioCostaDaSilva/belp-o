@@ -4,6 +4,7 @@
 
 ````mermaid
 flowchart LR
+  adm["Area administrativa"] --> microservice["API"]
   app["Aplicativo Mobile"] --> microservice["API"]
   microservice --> database(MySQL)
 ````

@@ -55,7 +55,7 @@ const Login = ({ navigation, children }) => {
         style={styles.ImageBackground}
       />
 
-      <SafeAreaView >
+      <SafeAreaView>
         <View style={styles.formContainer}>
           <TextInput
             mode="outlined"
@@ -79,17 +79,17 @@ const Login = ({ navigation, children }) => {
             theme={{ roundness: 30 }}
           />
           <View style={styles.buttonContainer}>
-        <Button
-             mode="contained"
-            onPress={handleLogin}
-            loading={loading}
-            disabled={loading}
-            style={styles.button}
-                  labelStyle={styles.buttonLabel}
-              >
-                Entrar
+            <Button
+              mode="contained"
+              onPress={handleLogin}
+              loading={loading}
+              disabled={loading}
+              style={styles.button}
+              labelStyle={styles.buttonLabel}
+            >
+              Entrar
             </Button>
-              </View>
+          </View>
           <View style={styles.linkContainer}>
             <Text style={styles.textFooter}>Novo usuário? </Text>
             <Text
@@ -109,16 +109,16 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 500,
     justifyContent: 'center',
-     alignItems: 'center',
+    alignItems: 'center',
   },
   emailInput: {
-  marginBottom: 15,
-  marginTop: 15,
-  backgroundColor: 'white',
+    marginBottom: 15,
+    marginTop: 15,
+    backgroundColor: 'white',
   },
   senhaInput: {
-     marginBottom: 15,
-     backgroundColor: 'white',
+    marginBottom: 15,
+    backgroundColor: 'white',
   },
   formContainer: {
     flex: 1,
@@ -133,10 +133,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   button:{
-     borderRadius: 30,
-     backgroundColor: '#9D735A',
-     width: 250,
-     height: 40,
+    borderRadius: 30,
+    backgroundColor: '#9D735A',
+    width: 250,
+    height: 40,
   },
   buttonLabel: {
     fontSize: 20,

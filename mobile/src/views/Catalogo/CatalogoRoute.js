@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
-import { ScrollView, Text, View } from 'react-native'
+import { ScrollView, Text, View, Alert } from 'react-native'
 import { BottomSheet } from "react-native-btr"
+import { Navigate, useNavigate } from 'react-router-native'
 import { Appbar, Button, Card, Searchbar } from 'react-native-paper'
 import { getProdutos } from '../../api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function CatalogoRoute() {
+  const navigate = useNavigate()
   const [produtos, setProdutos] = useState([])
   const [carrinho, setCarrinho] = useState([])
   const [carrinhoVisible, setCarrinhoVisible] = useState(false)
@@ -58,6 +60,30 @@ export default function CatalogoRoute() {
           title="Belpão"
           titleStyle={{ fontSize: 24, fontWeight: 'bold' }}
         />
+        <Appbar.Action
+  icon="logout"
+  onPress={() => {
+    Alert.alert(
+      'Sair do aplicativo',
+      'Você tem certeza que deseja sair?',
+      [
+        {
+          text: 'Não',
+          style: 'cancel',
+        },
+        {
+          text: 'Sim',
+          onPress: async () => {
+            await AsyncStorage.removeItem('token')
+            navigate('/')
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  }}
+/>
+
       </Appbar.Header>
       <ScrollView style={{ flex: 1, padding: 10 }}>
         <Searchbar

@@ -1,5 +1,5 @@
 // deve informar o endereço correto do servidor
-const baseURL = new URL("http://192.168.200.13:3000")
+const baseURL = new URL("http://192.168.100.13:3000")
 
 /**
  * Função para obter o token de autenticação do usuário

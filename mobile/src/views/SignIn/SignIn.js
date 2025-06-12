@@ -10,9 +10,14 @@ const SignIn = () => {
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
+  const [confirmarSenha, setConfirmarSenha] = useState('');
   const [telefone, setTelefone] = useState('')
 
   const onPress = async () => {
+    if (senha !== confirmarSenha) {
+      alert("As senhas não coincidem. Por favor, verifique. ")
+      return
+    }
     try {
       await cadastro(nome, senha, email, telefone)
       alert("Usuário cadastrado com sucesso, efetue o login.")
@@ -60,6 +65,16 @@ const SignIn = () => {
             mode="outlined"
             secureTextEntry
             theme={{ roundness: 30 }}
+          />
+
+          <TextInput
+          label="Confirme sua senha"
+          value={confirmarSenha}
+          onChangeText={setConfirmarSenha}
+          style={styles.input}
+          mode="outlined"
+          secureTextEntry
+          theme={{roundness: 30 }}
           />
 
           <TextInput

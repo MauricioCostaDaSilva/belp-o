@@ -17,14 +17,15 @@
     "react": "19.0.0",
     "react-native": "0.79.2",
     "react-native-btr": "^2.2.1",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-paper": "^5.14.3",
-    "react-native-safe-area-context": "^5.4.0",
+    "react-native-safe-area-context": "^5.4.1",
     "react-router-native": "^6.30.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "typescript": "~5.8.3",
-    "@types/react": "~19.0.10"
+    "@types/react": "~19.0.10",
+    "typescript": "~5.8.3"
   },
   "private": true
 }

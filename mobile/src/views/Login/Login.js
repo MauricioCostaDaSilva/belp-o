@@ -1,9 +1,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useEffect, useState } from 'react'
-import { SafeAreaView, Text, View, ImageBackground, ScrollView, StyleSheet } from 'react-native'
+import {
+  ImageBackground,
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native'
 import { Appbar, Button, TextInput } from 'react-native-paper'
 import { useNavigate, Outlet } from 'react-router-native'
 import { getToken } from '../../api'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 
 
 const Login = ({ navigation, children }) => {
@@ -49,11 +59,18 @@ const Login = ({ navigation, children }) => {
   }
 
   return (
-    <ScrollView>
-      <ImageBackground
-        source={require('../../../assets/fundo.jpeg')}
-        style={styles.ImageBackground}
-      />
+   <KeyboardAwareScrollView
+         style={{ flex: 1 }}
+         contentContainerStyle={{ flexGrow: 1 }}
+         enableOnAndroid={true}
+         extraScrollHeight={100}
+         keyboardShouldPersistTaps="handled"
+       >
+         <ImageBackground
+           source={require('../../../assets/fundo.jpeg')}
+           style={styles.ImageBackground}
+         />
+         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
       <SafeAreaView>
         <View style={styles.formContainer}>
@@ -101,7 +118,8 @@ const Login = ({ navigation, children }) => {
           </View>
         </View>
       </SafeAreaView>
-    </ScrollView>
+    </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   )
 }
 const styles = StyleSheet.create({

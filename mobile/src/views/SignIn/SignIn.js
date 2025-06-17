@@ -1,21 +1,29 @@
 import React, { useState } from 'react'
-import { ImageBackground, SafeAreaView, StyleSheet, View, ScrollView, Text } from 'react-native'
+import {
+  ImageBackground,
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native'
 import { Button, TextInput } from 'react-native-paper'
 import { useNavigate } from 'react-router-native'
 import { cadastro } from '../../api'
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const SignIn = () => {
   const navigate = useNavigate()
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
-  const [confirmarSenha, setConfirmarSenha] = useState('');
+  const [confirmarSenha, setConfirmarSenha] = useState('')
   const [telefone, setTelefone] = useState('')
 
   const onPress = async () => {
     if (senha !== confirmarSenha) {
-      alert("As senhas não coincidem. Por favor, verifique. ")
+      alert("As senhas não coincidem. Por favor, verifique.")
       return
     }
     try {
@@ -28,89 +36,88 @@ const SignIn = () => {
   }
 
   return (
-    // rolagem para deixar a tela menos estatica
-    <ScrollView> 
+    <KeyboardAwareScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={{ flexGrow: 1 }}
+      enableOnAndroid={true}
+      extraScrollHeight={100}
+      keyboardShouldPersistTaps="handled"
+    >
       <ImageBackground
         source={require('../../../assets/fundo.jpeg')}
         style={styles.ImageBackground}
       />
-
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-        <View style={styles.formContainer}>
-          <TextInput
-            label="Digite seu nome"
-            value={nome}
-            onChangeText={setNome}
-            style={styles.input}
-            theme={{ roundness: 30 }}
-            mode="outlined"
-          />
-
-          <TextInput
-            label="Digite seu email"
-            value={email}
-            onChangeText={setEmail}
-            style={styles.input}
-            mode="outlined"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            theme={{ roundness: 30 }}
-          />
-
-          <TextInput
-            label="Digite sua senha"
-            value={senha}
-            onChangeText={setSenha}
-            style={styles.input}
-            mode="outlined"
-            secureTextEntry
-            theme={{ roundness: 30 }}
-          />
-
-          <TextInput
-          label="Confirme sua senha"
-          value={confirmarSenha}
-          onChangeText={setConfirmarSenha}
-          style={styles.input}
-          mode="outlined"
-          secureTextEntry
-          theme={{roundness: 30 }}
-          />
-
-          <TextInput
-            label="Digite seu telefone"
-            value={telefone}
-            onChangeText={setTelefone}
-            style={styles.input}
-            mode="outlined"
-            keyboardType="phone-pad"
-            theme={{ roundness: 30 }}
-          />
-
-          <View style={styles.buttonContainer}>
-            <Button
-              mode="contained"
-              onPress={onPress}
-              style={styles.button}
-              labelStyle={styles.buttonLabel}
-            >
-              Cadastrar
-            </Button>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+          <View style={styles.formContainer}>
+            <TextInput
+              label="Digite seu nome"
+              value={nome}
+              onChangeText={setNome}
+              style={styles.input}
+              theme={{ roundness: 30 }}
+              mode="outlined"
+            />
+            <TextInput
+              label="Digite seu email"
+              value={email}
+              onChangeText={setEmail}
+              style={styles.input}
+              mode="outlined"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              theme={{ roundness: 30 }}
+            />
+            <TextInput
+              label="Digite sua senha"
+              value={senha}
+              onChangeText={setSenha}
+              style={styles.input}
+              mode="outlined"
+              secureTextEntry
+              theme={{ roundness: 30 }}
+            />
+            <TextInput
+              label="Confirme sua senha"
+              value={confirmarSenha}
+              onChangeText={setConfirmarSenha}
+              style={styles.input}
+              mode="outlined"
+              secureTextEntry
+              theme={{ roundness: 30 }}
+            />
+            <TextInput
+              label="Digite seu telefone"
+              value={telefone}
+              onChangeText={setTelefone}
+              style={styles.input}
+              mode="outlined"
+              keyboardType="phone-pad"
+              theme={{ roundness: 30 }}
+            />
+            <View style={styles.buttonContainer}>
+              <Button
+                mode="contained"
+                onPress={onPress}
+                style={styles.button}
+                labelStyle={styles.buttonLabel}
+              >
+                Cadastrar
+              </Button>
+            </View>
+            <View style={styles.linkContainer}>
+              <Text style={styles.textFooter}>Já tem uma conta? </Text>
+              <Text
+                style={styles.linkFooter}
+                onPress={() => navigate('/')}
+              >
+                Login
+              </Text>
+            </View>
           </View>
-         <View style={styles.linkContainer}>
-                     <Text style={styles.textFooter}>Já tem uma conta? </Text>
-                     <Text
-                       style={styles.linkFooter}
-                       onPress={() => navigate('/')}
-                     >
-                       Login
-                     </Text>
-                   </View>
-                      
-                    
-        </View>
-      </SafeAreaView>
-    </ScrollView>
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   )
 }
 
@@ -151,19 +158,18 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   linkContainer: {
-    flexDirection: 'row', 
-    marginTop: 15, 
-    justifyContent: 'center'
+    flexDirection: 'row',
+    marginTop: 15,
+    justifyContent: 'center',
   },
   textFooter: {
     fontSize: 14,
   },
   linkFooter: {
-    color: '#9D735A', 
-    fontWeight: 'bold', 
-    fontSize: 14 
+    color: '#9D735A',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
 })
-
 
 export default SignIn

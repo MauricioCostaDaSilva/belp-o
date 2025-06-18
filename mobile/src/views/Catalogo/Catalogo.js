@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Text } from 'react-native'
 import { BottomNavigation } from 'react-native-paper'
 import CatalogoRoute from './CatalogoRoute'
-import { useNavigate, Outlet } from 'react-router-native'
 import InfoPadariaScreen from './Informacoes'
 import Pagamento from '../Carrinho/Pagamento/Pagamento'
 

@@ -9,22 +9,34 @@
 import React, {useEffect, useState} from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Appbar, Button, Card, Searchbar } from 'react-native-paper'
+
 
 const Pagamento = (props) => {
-  const [carrinho, setCarrinho] = useState(undefined)
+  const [carrinho, setCarrinho] = useState([])
 
-  useEffect(() => {
-    const carregaCarrinho = async () => {
-      const data = await AsyncStorage.getItem('carrinho')
-      setCarrinho(data)
+  const carregaCarrinho = async () => {
+   try {const data = await AsyncStorage.getItem('carrinho')
+    console.log(data);
+
+    setCarrinho(JSON.parse(data))
+  } catch (error) {
+      console.error("Erro ao carregar o carrinho:", error),
+   setCarrinho([])
     }
-
-    carregaCarrinho()
-  }, [])
-
+  }
+ useEffect(() => {
+  (async () => {
+    await carregaCarrinho()
+  })()
+}, [])
   return (
     <View style={styles.container}>
-      <Text>{JSON.stringify(carrinho)}</Text>
+      <Button onClick={() => carregaCarrinho()} style={{ marginBottom: 20 }}>
+        Atualizar Carrinho
+      </Button>
+       <Text>{JSON.stringify(carrinho)}</Text>
+
     </View>
   )
 }

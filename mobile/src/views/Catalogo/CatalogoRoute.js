@@ -16,23 +16,40 @@ export default function CatalogoRoute() {
   const addToCarrinho = async (produto) => {
     const produtoExistente = carrinho.find(item => item.id === produto.id)
     if (produtoExistente) {
-      setCarrinho(carrinho.map(item => item.id === produto.id ? { ...item, quantidade: item.quantidade + 1 } : item))
-    } else {
-      setCarrinho([...carrinho, { ...produto, quantidade: 1 }])
-    }
-    await AsyncStorage.setItem('carrinho', JSON.stringify(carrinho))
+      const updatedCarrinho = carrinho.map(item => item.id === produto.id ? { ...item, quantidade: item.quantidade + 1 } : item)
+      await AsyncStorage.setItem('carrinho', JSON.stringify(updatedCarrinho))
+      console.log("Produto atualizado no carrinho:", updatedCarrinho)
+      setCarrinho(updatedCarrinho)
 
+    } else {
+      const newProduto = [...carrinho, { ...produto, quantidade: 1 }]
+      await AsyncStorage.setItem('carrinho', JSON.stringify(newProduto))
+      console.log("Produto adicionado ao carrinho:", newProduto)
+      setCarrinho(newProduto)
+    }
 
   }
 
   const removeFromCarrinho = async (produto) => {
-    const produtoExistente = carrinho.find(item => item.id === produto.id)
-    if (produtoExistente.quantidade > 1) {
-      setCarrinho(carrinho.map(item => item.id === produto.id ? { ...item, quantidade: item.quantidade - 1 } : item))
-    } else {
-      setCarrinho(carrinho.filter(item => item.id !== produto.id))
+    try {
+      const produtoExistente = carrinho.find(item => item.id === produto.id)
+      if (produtoExistente.quantidade > 1) {
+        const updatedCarrinho = carrinho.map(item => item.id === produto.id ? { ...item, quantidade: item.quantidade - 1 } : item)
+        await AsyncStorage.setItem('carrinho', JSON.stringify(updatedCarrinho))
+        console.log("Produto atualizado no carrinho:", updatedCarrinho)
+        setCarrinho(updatedCarrinho)
+      } else {
+        const removeFromCarrinho = carrinho.filter(item => item.id !== produto.id)
+        await AsyncStorage.setItem('carrinho', JSON.stringify(removeFromCarrinho))
+        console.log("Produto removido do carrinho:", removeFromCarrinho)
+        setCarrinho(removeFromCarrinho)
+      }
+
+    } catch (error) {
+      console.log("Erro ao remover produto do carrinho:", error);
+
+
     }
-     await AsyncStorage.setItem('carrinho', JSON.stringify(carrinho))
 
   }
 
@@ -61,28 +78,28 @@ export default function CatalogoRoute() {
           titleStyle={{ fontSize: 24, fontWeight: 'bold' }}
         />
         <Appbar.Action
-  icon="logout"
-  onPress={() => {
-    Alert.alert(
-      'Sair do aplicativo',
-      'Você tem certeza que deseja sair?',
-      [
-        {
-          text: 'Não',
-          style: 'cancel',
-        },
-        {
-          text: 'Sim',
-          onPress: async () => {
-            await AsyncStorage.removeItem('token')
-            navigate('/')
-          },
-        },
-      ],
-      { cancelable: true }
-    );
-  }}
-/>
+          icon="logout"
+          onPress={() => {
+
+            Alert.alert(
+              'Sair do aplicativo',
+              'Você tem certeza que deseja sair?',
+              [
+                {
+                  text: 'Não',
+                  style: 'cancel',
+                },
+                {
+                  text: 'Sim',
+                  onPress: () => {
+                    navigate('/logout')
+                  },
+                },
+              ],
+              { cancelable: true }
+            );
+          }}
+        />
 
       </Appbar.Header>
       <ScrollView style={{ flex: 1, padding: 10 }}>

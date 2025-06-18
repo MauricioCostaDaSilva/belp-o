@@ -1,116 +1,126 @@
 import React, { useState } from 'react'
-import { ImageBackground, SafeAreaView, StyleSheet, View, ScrollView, Text } from 'react-native'
+import {
+  ImageBackground,
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from 'react-native'
 import { Button, TextInput } from 'react-native-paper'
 import { useNavigate } from 'react-router-native'
 import { cadastro } from '../../api'
-
 
 const SignIn = () => {
   const navigate = useNavigate()
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
-  const [confirmarSenha, setConfirmarSenha] = useState('');
+  const [confirmarSenha, setConfirmarSenha] = useState('')
   const [telefone, setTelefone] = useState('')
 
   const onPress = async () => {
     if (senha !== confirmarSenha) {
-      alert("As senhas não coincidem. Por favor, verifique. ")
+      alert('As senhas não coincidem. Por favor, verifique.')
       return
     }
     try {
-      await cadastro(nome, senha, email, telefone);
-      alert('Usuário cadastrado com sucesso, efetue o login.');
-      navigate('/');
+      await cadastro(nome, senha, email, telefone)
+      alert('Usuário cadastrado com sucesso, efetue o login.')
+      navigate('/')
     } catch (error) {
-      alert('Falha ao cadastrar usuário, tente novamente.');
+      alert('Falha ao cadastrar usuário, tente novamente.')
     }
-  };
+  }
 
   return (
-    // rolagem para deixar a tela menos estatica
-    <ScrollView>
-      <ImageBackground
-        source={require('../../../assets/fundo.jpeg')}
-        style={styles.ImageBackground}
-      />
-
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-        <View style={styles.formContainer}>
-          <TextInput
-            label="Digite seu nome"
-            value={nome}
-            onChangeText={setNome}
-            style={styles.input}
-            theme={{ roundness: 30 }}
-            mode="outlined"
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={100}
+      >
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <ImageBackground
+            source={require('../../../assets/fundo.jpeg')}
+            style={styles.ImageBackground}
           />
 
-          <TextInput
-            label="Digite seu email"
-            value={email}
-            onChangeText={setEmail}
-            style={styles.input}
-            mode="outlined"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            theme={{ roundness: 30 }}
-          />
-
-          <TextInput
-            label="Digite sua senha"
-            value={senha}
-            onChangeText={setSenha}
-            style={styles.input}
-            mode="outlined"
-            secureTextEntry
-            theme={{ roundness: 30 }}
-          />
-
-          <TextInput
-          label="Confirme sua senha"
-          value={confirmarSenha}
-          onChangeText={setConfirmarSenha}
-          style={styles.input}
-          mode="outlined"
-          secureTextEntry
-          theme={{roundness: 30 }}
-          />
-
-          <TextInput
-            label="Digite seu telefone"
-            value={telefone}
-            onChangeText={setTelefone}
-            style={styles.input}
-            mode="outlined"
-            keyboardType="phone-pad"
-            theme={{ roundness: 30 }}
-          />
-
-          <View style={styles.buttonContainer}>
-            <Button
-              mode="contained"
-              onPress={onPress}
-              style={styles.button}
-              labelStyle={styles.buttonLabel}
-            >
-              Cadastrar
-            </Button>
-          </View>
-         <View style={styles.linkContainer}>
-                     <Text style={styles.textFooter}>Já tem uma conta? </Text>
-                     <Text
-                       style={styles.linkFooter}
-                       onPress={() => navigate('/')}
-                     >
-                       Login
-                     </Text>
-                   </View>
-
-
-        </View>
-      </SafeAreaView>
-    </ScrollView>
+          <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+            <View style={styles.formContainer}>
+              <TextInput
+                label="Digite seu nome"
+                value={nome}
+                onChangeText={setNome}
+                style={styles.input}
+                theme={{ roundness: 30 }}
+                mode="outlined"
+              />
+              <TextInput
+                label="Digite seu email"
+                value={email}
+                onChangeText={setEmail}
+                style={styles.input}
+                mode="outlined"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                theme={{ roundness: 30 }}
+              />
+              <TextInput
+                label="Digite sua senha"
+                value={senha}
+                onChangeText={setSenha}
+                style={styles.input}
+                mode="outlined"
+                secureTextEntry
+                theme={{ roundness: 30 }}
+              />
+              <TextInput
+                label="Confirme sua senha"
+                value={confirmarSenha}
+                onChangeText={setConfirmarSenha}
+                style={styles.input}
+                mode="outlined"
+                secureTextEntry
+                theme={{ roundness: 30 }}
+              />
+              <TextInput
+                label="Digite seu telefone"
+                value={telefone}
+                onChangeText={setTelefone}
+                style={styles.input}
+                mode="outlined"
+                keyboardType="phone-pad"
+                theme={{ roundness: 30 }}
+              />
+              <View style={styles.buttonContainer}>
+                <Button
+                  mode="contained"
+                  onPress={onPress}
+                  style={styles.button}
+                  labelStyle={styles.buttonLabel}
+                >
+                  Cadastrar
+                </Button>
+              </View>
+              <View style={styles.linkContainer}>
+                <Text style={styles.textFooter}>Já tem uma conta? </Text>
+                <Text
+                  style={styles.linkFooter}
+                  onPress={() => navigate('/')}
+                >
+                  Login
+                </Text>
+              </View>
+            </View>
+          </SafeAreaView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   )
 }
 
@@ -164,6 +174,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 })
-
 
 export default SignIn

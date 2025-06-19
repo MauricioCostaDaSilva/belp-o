@@ -70,6 +70,11 @@ export default function CatalogoRoute() {
     fetchProdutos()
   }, [])
 
+  const produtosFiltrados = produtos.filter(produto =>
+    produto.nome.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+  
+
   return (
     <>
       <Appbar.Header style={{ backgroundColor: '#f8f8f8', borderBottomColor: '#ccc', borderBottomWidth: 1 }}>
@@ -109,9 +114,9 @@ export default function CatalogoRoute() {
           value={searchQuery}
           style={{ marginBottom: 20 }}
         />
-        {produtos.map(produto => {
+        {produtosFiltrados.map(produto => {
           const isInCarrinho = carrinho.find(item => item.id === produto.id)
-
+          
           return (
             <Card
               style={{ marginBottom: 20 }}

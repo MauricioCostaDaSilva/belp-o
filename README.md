@@ -37,13 +37,17 @@ git clone https://github.com/MauricioCostaDaSilva/belp-o
 
 # Instale as dependências
 
-
 cd belp-o/mobile/ npm install
 
 cd belp-o/server/ npm install
 
+#inicie o server
+
+cd bel-o/server/npm start
+
 # Inicie a aplicação
-npx expo start
+
+cd bel-o/mobile/ npx expo start
 
 
 ## Diagrama de arquitetura

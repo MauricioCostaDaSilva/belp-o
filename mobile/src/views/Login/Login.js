@@ -7,7 +7,7 @@ import {
   View,
   Text,
   TouchableWithoutFeedback,
-  Keyboard,
+  Keyboard,Linking
 } from 'react-native'
 import { Appbar, Button, TextInput } from 'react-native-paper'
 import { useNavigate, Outlet } from 'react-router-native'
@@ -59,66 +59,76 @@ const Login = ({ navigation, children }) => {
   }
 
   return (
-   <KeyboardAwareScrollView
-         style={{ flex: 1 }}
-         contentContainerStyle={{ flexGrow: 1 }}
-         enableOnAndroid={true}
-         extraScrollHeight={100}
-         keyboardShouldPersistTaps="handled"
-       >
-         <ImageBackground
-           source={require('../../../assets/fundo.jpeg')}
-           style={styles.ImageBackground}
-         />
-         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <KeyboardAwareScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={{ flexGrow: 1 }}
+      enableOnAndroid={true}
+      extraScrollHeight={100}
+      keyboardShouldPersistTaps="handled"
+    >
+      <ImageBackground
+        source={require('../../../assets/fundo.jpeg')}
+        style={styles.ImageBackground}
+      />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-      <SafeAreaView>
-        <View style={styles.formContainer}>
-          <TextInput
-            mode="outlined"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            label="Informe seu endereço de e-mail"
-            disabled={loading}
-            value={username}
-            onChangeText={setUsername}
-            style={styles.emailInput}
-            theme={{ roundness: 30 }}
-          />
-          <TextInput
-            mode="outlined"
-            label="Informe sua senha"
-            secureTextEntry
-            disabled={loading}
-            value={password}
-            onChangeText={setPassword}
-            style={styles.senhaInput}
-            theme={{ roundness: 30 }}
-          />
-          <View style={styles.buttonContainer}>
-            <Button
-              mode="contained"
-              onPress={handleLogin}
-              loading={loading}
+        <SafeAreaView>
+          <View style={styles.formContainer}>
+            <TextInput
+              mode="outlined"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              label="Informe seu endereço de e-mail"
               disabled={loading}
-              style={styles.button}
-              labelStyle={styles.buttonLabel}
-            >
-              Entrar
-            </Button>
+              value={username}
+              onChangeText={setUsername}
+              style={styles.emailInput}
+              theme={{ roundness: 30 }}
+            />
+            <TextInput
+              mode="outlined"
+              label="Informe sua senha"
+              secureTextEntry
+              disabled={loading}
+              value={password}
+              onChangeText={setPassword}
+              style={styles.senhaInput}
+              theme={{ roundness: 30 }}
+            />
+            <View style={styles.buttonContainer}>
+              <Button
+                mode="contained"
+                onPress={handleLogin}
+                loading={loading}
+                disabled={loading}
+                style={styles.button}
+                labelStyle={styles.buttonLabel}
+              >
+                Entrar
+              </Button>
+            </View>
+            <View style={styles.linkContainer}>
+              <Text style={styles.textFooter}>Novo usuário? </Text>
+              <Text
+                style={styles.linkFooter}
+                onPress={() => navigate('/cadastro')}
+              >
+                Cadastre-se
+              </Text>
+            </View>
+
+            <View style={[styles.linkContainer, { marginTop: 5 }]}>
+              <Text style={styles.textFooter}>É administrador? </Text>
+              <Text
+                style={styles.linkFooter}
+                onPress={() => Linking.openURL('http://192.168.1.5:3001/login_adm/index.html')}
+              >
+                Acesse
+              </Text>
+            </View>
           </View>
-          <View style={styles.linkContainer}>
-            <Text style={styles.textFooter}>Novo usuário? </Text>
-            <Text
-              style={styles.linkFooter}
-              onPress={() => navigate('/cadastro')}
-            >
-              Cadastre-se
-            </Text>
-          </View>
-        </View>
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
     </KeyboardAwareScrollView>
   )
 }
@@ -150,7 +160,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
-  button:{
+  button: {
     borderRadius: 30,
     backgroundColor: '#9D735A',
     width: 250,

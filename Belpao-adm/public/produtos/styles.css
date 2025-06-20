@@ -1,0 +1,141 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  background-color:#f6e8c3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
+  width: 100%;
+  background-color: #fff;
+  text-align: center;
+}
+
+header h1 {
+  background-color: #cc9966;
+  color: white;
+  padding: 15px 0;
+  font-size: 1.6rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border: 3px solid white;
+  border-radius: 10px;
+  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+form input,
+form button,
+form textarea {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #999;
+  border-radius: 5px;
+}
+
+form button {
+  background-color: #cc9966;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #b57f4f;
+}
+
+/* Botão cancelar com mesmo tamanho do salvar */
+#cancelar-edicao {
+  background-color: #999;
+  display: none;
+  font-size: 1rem;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Lista de produtos */
+#lista-produtos {
+  margin-top: 20px;
+  list-style: none;
+  padding: 0;
+}
+
+/* Item da lista com imagem + info + botões */
+#lista-produtos li {
+  background-color: #fff;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Imagem com tamanho fixo */
+#lista-produtos img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* Informações do produto */
+.produto-info {
+  flex: 1;
+}
+.produto-info p {
+  margin-bottom: 6px;
+  font-size: 14px;
+  word-break: break-word;
+}
+
+/* Botões lado a lado */
+.botoes {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.botoes button {
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.botoes .editar {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.botoes .remover {
+  background-color: #f44336;
+  color: white;
+}

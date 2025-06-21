@@ -7,11 +7,11 @@ import {
   View,
   Text,
   TouchableWithoutFeedback,
-  Keyboard,Linking
+  Keyboard, Linking
 } from 'react-native'
 import { Appbar, Button, TextInput } from 'react-native-paper'
 import { useNavigate, Outlet } from 'react-router-native'
-import { getToken } from '../../api'
+import { getToken, admWEB } from '../../api'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
@@ -22,6 +22,9 @@ const Login = ({ navigation, children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const urlAdmLogin = new URL(admWEB)
+  urlAdmLogin.pathname = '/login_adm/login.html'
+
 
   useEffect(() => {
     const checkToken = async () => {
@@ -121,7 +124,7 @@ const Login = ({ navigation, children }) => {
               <Text style={styles.textFooter}>É administrador? </Text>
               <Text
                 style={styles.linkFooter}
-                onPress={() => Linking.openURL('http://192.168.1.5:3001/login_adm/index.html')}
+                onPress={() => Linking.openURL(urlAdmLogin.toString())}
               >
                 Acesse
               </Text>

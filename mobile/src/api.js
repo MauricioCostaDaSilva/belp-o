@@ -1,5 +1,6 @@
 // deve informar o endereço correto do servidor
-const baseURL = new URL("http://192.168.1.5:3000")
+const baseURL = new URL("http://192.168.1.2:3000")
+export const admWEB = new URL ("http://192.168.1.2:3001") 
 /**
  * Função para obter o token de autenticação do usuário
  *
@@ -17,6 +18,7 @@ export async function getToken (username, password) {
   }
 
   baseURL.pathname = "/token"
+
 
   const response = await fetch(baseURL, requestOptions)
 
@@ -38,6 +40,7 @@ export async function cadastro (nome, senha, email, telefone) {
   }
 
   baseURL.pathname = "/cadastro"
+
 
   const response = await fetch(baseURL, requestOptions)
 

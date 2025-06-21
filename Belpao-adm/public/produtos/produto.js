@@ -1,109 +1,140 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("form-produto");
-  const lista = document.getElementById("lista-produtos");
-  const cancelarEdicaoBtn = document.getElementById("cancelar-edicao");
-  let produtoEditando = null;
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('form-produto');
+    const listaProdutos = document.getElementById('lista-produtos');
+    const cancelarEdicaoBtn = document.getElementById('cancelar-edicao'); // Obtenha o botão de cancelar
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const usuario_id = sessionStorage.getItem("usuario_id");
+    let produtoEditandoId = null; // id do produto em edição
 
-    if (!usuario_id) {
-      alert("Usuário não autenticado.");
-      return;
+    // Oculta o botão de cancelar inicialmente
+    cancelarEdicaoBtn.style.display = 'none';
+
+    listarProdutos();
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        try {
+            let resposta;
+
+            if (produtoEditandoId) {
+                // Se estiver editando, usa o método PUT
+                resposta = await fetch(`/api/produtos/${produtoEditandoId}`, {
+                    method: 'PUT',
+                    body: formData,
+                });
+            } else {
+                // Se não estiver editando, usa o método POST para cadastrar
+                resposta = await fetch('/api/produtos', {
+                    method: 'POST',
+                    body: formData,
+                });
+            }
+
+            const resultado = await resposta.json();
+
+            if (resposta.ok) {
+                alert(produtoEditandoId ? 'Produto atualizado com sucesso!' : 'Produto cadastrado com sucesso!');
+                form.reset(); // Limpa o formulário
+                produtoEditandoId = null; // Reseta o ID de edição
+                cancelarEdicaoBtn.style.display = 'none'; // Esconde o botão após salvar/atualizar
+                listarProdutos(); // Atualiza a lista de produtos
+            } else {
+                alert('Erro: ' + resultado.erro);
+            }
+        } catch (error) {
+            console.error('Erro na submissão do formulário:', error);
+            alert('Ocorreu um erro ao processar sua solicitação.');
+        }
+    });
+
+    async function listarProdutos() {
+        listaProdutos.innerHTML = ''; // Limpa a lista antes de preencher
+        try {
+            const resposta = await fetch('/api/produtos');
+            const produtos = await resposta.json();
+
+            if (produtos.length === 0) {
+                listaProdutos.innerHTML = '<p style="text-align: center; color: #5e3c24;">Nenhum produto cadastrado.</p>';
+                return;
+            }
+
+            produtos.forEach((produto) => {
+                const item = document.createElement('li');
+
+                item.innerHTML = `
+                    ${produto.imagem ? `<img class="produto-img" src="${produto.imagem}" alt="${produto.nome}">` : ''}
+                    <div class="produto-info">
+                        <p><strong>Categoria:</strong> ${produto.categoria}</p>
+                        <p><strong>Nome:</strong> ${produto.nome}</p>
+                        <p><strong>Preço:</strong> R$ ${parseFloat(produto.preco).toFixed(2).replace('.', ',')}</p>
+                        <p><strong>Descrição:</strong><br>${produto.descricao}</p>
+                    </div>
+                    <div class="botoes">
+                        <button class="editar" onclick="editarProduto(${produto.id})">Editar</button>
+                        <button class="remover" onclick="excluirProduto(${produto.id})">Excluir</button>
+                    </div>
+                `;
+                listaProdutos.appendChild(item);
+            });
+        } catch (error) {
+            console.error('Erro ao buscar produtos:', error);
+            listaProdutos.innerHTML = '<p style="text-align: center; color: red;">Erro ao carregar produtos.</p>';
+        }
     }
 
-    const formData = new FormData(form);
-    formData.append("usuario_id", usuario_id);
+    // Função global para excluir produto
+    window.excluirProduto = async (id) => {
+        if (confirm('Tem certeza que deseja excluir este produto?')) {
+            try {
+                const resposta = await fetch(`/api/produtos/${id}`, {
+                    method: 'DELETE',
+                });
 
-    const url = produtoEditando ? `/api/produtos/${produtoEditando}` : "/api/produtos";
-    const method = produtoEditando ? "PUT" : "POST";
+                const resultado = await resposta.json();
 
-    try {
-      const res = await fetch(url, { method, body: formData });
-      if (!res.ok) throw new Error("Erro ao salvar produto");
+                if (resposta.ok) {
+                    alert('Produto excluído com sucesso!');
+                    listarProdutos(); // Atualiza a lista após exclusão
+                } else {
+                    alert('Erro ao excluir: ' + resultado.erro);
+                }
+            } catch (error) {
+                console.error('Erro ao excluir:', error);
+                alert('Ocorreu um erro ao tentar excluir o produto.');
+            }
+        }
+    };
 
-      form.reset();
-      produtoEditando = null;
-      cancelarEdicaoBtn.style.display = "none";
-      form.querySelector("button[type='submit']").textContent = "Cadastrar Produto";
-      carregarProdutos();
-    } catch (error) {
-      alert("Erro ao salvar produto.");
-      console.error(error);
-    }
-  });
+    // Função global para editar produto
+    window.editarProduto = async (id) => {
+        try {
+            const resposta = await fetch(`/api/produtos/${id}`);
+            if (!resposta.ok) {
+                alert('Erro ao buscar produto para edição');
+                return;
+            }
+            const produto = await resposta.json();
 
-  cancelarEdicaoBtn.addEventListener("click", () => {
-    form.reset();
-    produtoEditando = null;
-    cancelarEdicaoBtn.style.display = "none";
-    form.querySelector("button[type='submit']").textContent = "Cadastrar Produto";
-  });
+            // Preenche o formulário com os dados do produto
+            form.categoria.value = produto.categoria;
+            form.nome.value = produto.nome;
+            form.descricao.value = produto.descricao;
+            form.preco.value = produto.preco; // Use 'preco' aqui, não 'valor' se o name for 'preco'
 
-  async function carregarProdutos() {
-    try {
-      const res = await fetch("/api/produtos");
-      const produtos = await res.json();
-      lista.innerHTML = "";
+            produtoEditandoId = produto.id; // Define o ID do produto que está sendo editado
+            cancelarEdicaoBtn.style.display = 'block'; // Mostra o botão de cancelar ao entrar em modo de edição
+        } catch (error) {
+            console.error('Erro ao buscar produto para edição:', error);
+            alert('Ocorreu um erro ao carregar os dados do produto para edição.');
+        }
+    };
 
-      produtos.forEach(prod => {
-        const item = document.createElement("li");
-        item.innerHTML = `
-          ${prod.imagem ? `<img src="${prod.imagem}" alt="Imagem do produto">` : ""}
-          <div class="produto-info">
-            <p><strong>Categoria:</strong> ${prod.categoria}</p>
-            <p><strong>Nome:</strong> ${prod.nome}</p>
-            <p><strong>Valor:</strong> R$ ${parseFloat(prod.valor).toFixed(2)}</p>
-            <p><strong>Descrição:</strong><br>${prod.descricao}</p>
-          </div>
-          <div class="botoes">
-            <button class="editar" data-id="${prod.id}">Editar</button>
-            <button class="remover" data-id="${prod.id}">Remover</button>
-          </div>
-        `;
-        lista.appendChild(item);
-      });
-
-      // Adiciona eventos aos botões
-      lista.querySelectorAll(".editar").forEach(botao => {
-        botao.addEventListener("click", async () => {
-          const id = botao.dataset.id;
-          const res = await fetch(`/api/produtos/${id}`);
-          const produto = await res.json();
-
-          document.getElementById("nome").value = produto.nome;
-          document.getElementById("categoria").value = produto.categoria;
-          document.getElementById("descricao").value = produto.descricao;
-          document.getElementById("valor").value = produto.valor;
-
-          produtoEditando = id;
-          cancelarEdicaoBtn.style.display = "inline-block";
-          form.querySelector("button[type='submit']").textContent = "Atualizar Produto";
-        });
-      });
-
-      lista.querySelectorAll(".remover").forEach(botao => {
-        botao.addEventListener("click", async () => {
-          const id = botao.dataset.id;
-          const confirmar = confirm("Tem certeza que deseja remover este produto?");
-          if (!confirmar) return;
-
-          try {
-            const res = await fetch(`/api/produtos/${id}`, { method: "DELETE" });
-            if (!res.ok) throw new Error("Erro ao remover produto");
-            carregarProdutos();
-          } catch (error) {
-            alert("Erro ao remover produto.");
-            console.error(error);
-          }
-        });
-      });
-
-    } catch {
-      alert("Erro ao carregar produtos.");
-    }
-  }
-
-  carregarProdutos();
+    // Evento de clique para o botão de cancelar edição
+    cancelarEdicaoBtn.addEventListener('click', () => {
+        form.reset(); // Limpa o formulário
+        produtoEditandoId = null; // Reseta o ID de edição
+        cancelarEdicaoBtn.style.display = 'none'; // Esconde o botão ao cancelar
+    });
 });

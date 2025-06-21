@@ -1,141 +1,210 @@
 /* Reset básico */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+html, body {
+    height: 100%;
+    background-color: #fffaf4; /* Cor de fundo suave */
 }
 
 body {
-  background-color:#f6e8c3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-header {
-  width: 100%;
-  background-color: #fff;
-  text-align: center;
-}
-
-header h1 {
-  background-color: #cc9966;
-  color: white;
-  padding: 15px 0;
-  font-size: 1.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinha no topo */
+    padding: 20px;
 }
 
 .container {
-  width: 100%;
-  max-width: 400px;
-  padding: 20px;
-  background-color: #f4f4f4;
-  border: 3px solid white;
-  border-radius: 10px;
-  margin-top: 20px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 450px; /* Largura máxima para o container principal */
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    overflow: hidden; /* Garante que as bordas arredondadas funcionem com a imagem */
+}
+
+.imagem-topo {
+    width: 100%;
+    height: 180px; /* Altura fixa para a imagem de topo */
+    overflow: hidden;
+}
+
+.imagem-topo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que a imagem cubra a área sem distorção */
+    display: block;
+}
+
+.conteudo {
+    padding: 24px;
+}
+
+.subtitulo {
+    text-align: center;
+    font-size: 0.95rem;
+    color: #9c775c; /* Cor de texto mais escura */
+    margin: 8px 0 15px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
 }
 
 h2 {
-  text-align: center;
-  margin-bottom: 20px;
+    text-align: center;
+    font-family: Georgia, serif; /* Fonte serifada para títulos */
+    font-size: 1.6rem;
+    color: #5e3c24; /* Cor escura para o título */
+    margin-bottom: 20px;
 }
 
 form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Espaçamento entre os elementos do formulário */
 }
 
-form input,
-form button,
-form textarea {
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #999;
-  border-radius: 5px;
+input[type="text"],
+input[type="number"],
+textarea,
+input[type="file"] {
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 25px; /* Bordas arredondadas para os campos */
+    background-color: #fff;
 }
 
-form button {
-  background-color: #cc9966;
-  color: white;
-  border: none;
-  cursor: pointer;
+input::placeholder,
+textarea::placeholder {
+    color: #999;
 }
 
-form button:hover {
-  background-color: #b57f4f;
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: #5e3c24; /* Cor da borda ao focar */
+    box-shadow: 0 0 0 2px #e9d7c1; /* Sombra sutil ao focar */
 }
 
-/* Botão cancelar com mesmo tamanho do salvar */
+/* Estilo para os botões gerais */
+button {
+    width: 220px; /* Largura padrão para os botões do formulário */
+    background-color: #c49b7e; /* Cor primária do botão */
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 10px 0;
+    font-size: 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 0 auto; /* Centraliza o botão */
+    transition: background-color 0.3s; /* Transição suave no hover */
+}
+
+button:hover {
+    background-color: #b78d71; /* Cor no hover */
+}
+
+/* Estilo específico para o botão de cancelar */
 #cancelar-edicao {
-  background-color: #999;
-  display: none;
-  font-size: 1rem;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+    background-color: #999; /* Cor diferente para o botão de cancelar */
+    /* display: none; - Removido daqui, controlado via JS */
 }
 
-/* Lista de produtos */
-#lista-produtos {
-  margin-top: 20px;
-  list-style: none;
-  padding: 0;
+#cancelar-edicao:hover {
+    background-color: #777;
 }
 
-/* Item da lista com imagem + info + botões */
-#lista-produtos li {
-  background-color: #fff;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+
+/* Estilos para a lista de produtos */
+ul {
+    list-style: none; /* Remove os marcadores de lista */
+    margin-top: 20px;
+    padding: 0;
 }
 
-/* Imagem com tamanho fixo */
-#lista-produtos img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 5px;
+li {
+    background-color: #fff;
+    border: 1px solid #e0dcd6;
+    border-radius: 10px;
+    padding: 10px; /* Reduzido um pouco o padding para deixar mais compacto */
+    margin-bottom: 12px;
+    display: flex;
+    gap: 10px; /* Espaçamento entre os elementos dentro do item da lista */
+    align-items: flex-start; /* Alinha os itens ao topo */
 }
 
-/* Informações do produto */
+img.produto-img {
+    width: 70px; /* Tamanho da imagem do produto na lista */
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0; /* Impede que a imagem encolha */
+}
+
 .produto-info {
-  flex: 1;
-}
-.produto-info p {
-  margin-bottom: 6px;
-  font-size: 14px;
-  word-break: break-word;
+    flex: 1; /* Permite que as informações ocupem o espaço restante */
+    min-width: 0; /* Essencial para que o texto não "transborde" */
 }
 
-/* Botões lado a lado */
+.produto-info p {
+    font-size: 13px; /* Tamanho da fonte para as informações do produto */
+    margin-bottom: 3px; /* Espaçamento reduzido entre as linhas de informação */
+    color: #5e3c24;
+}
+
+/* Para o nome e categoria: impede quebra de linha e adiciona "..." */
+.produto-info p:nth-child(1), /* Categoria */
+.produto-info p:nth-child(2), /* Nome */
+.produto-info p:nth-child(3) /* Preço */
+{
+    white-space: nowrap; /* Impede quebra de linha */
+    overflow: hidden; /* Esconde o texto que ultrapassa */
+    text-overflow: ellipsis; /* Adiciona "..." */
+}
+
+/* Para a descrição: permite quebra de linha normal */
+.produto-info p:nth-child(4) /* Descrição */
+{
+    white-space: normal; /* Permite quebra de linha */
+    overflow: visible; /* Garante que todo o texto seja visível */
+    text-overflow: clip; /* Remove o "..." se não houver overflow */
+}
+
+
 .botoes {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+    display: flex;
+    flex-direction: column; /* Botões um abaixo do outro */
+    gap: 5px; /* Espaço entre os botões */
+    align-items: flex-end; /* Alinha os botões à direita dentro do seu contêiner */
+    flex-shrink: 0; /* Impede que a área dos botões encolha */
 }
 
 .botoes button {
-  padding: 5px 10px;
-  font-size: 0.9rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+    width: 70px; /* Largura menor para os botões de editar/remover */
+    padding: 5px 0; /* Padding menor */
+    font-size: 0.75rem; /* Fonte menor */
+    border-radius: 15px; /* Bordas mais arredondadas */
+    margin: 0; /* Remove a margem auto que estava centralizando */
+    text-align: center; /* Centraliza o texto dentro do botão */
 }
 
 .botoes .editar {
-  background-color: #4CAF50;
-  color: white;
+    background-color: #4caf50; /* Cor verde para editar */
+}
+
+.botoes .editar:hover {
+    background-color: #43a047;
 }
 
 .botoes .remover {
-  background-color: #f44336;
-  color: white;
+    background-color: #f44336; /* Cor vermelha para remover */
+}
+
+.botoes .remover:hover {
+    background-color: #e53935;
 }

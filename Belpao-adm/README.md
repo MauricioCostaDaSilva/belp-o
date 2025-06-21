@@ -22,16 +22,14 @@ Belpao-adm/
 ## ✅ Pré-requisitos para rodar o projeto
 Node.js (versão 18 ou superior recomendado)
 
-MySQL Server instalado e rodando localmente
-
 ## ✅ Instalação das dependências Node.js
 Abra o terminal dentro da pasta /server-adm
 
-npm init -y
-npm install express mysql2 multer cors
+npm install 
+
 ## ✅ Rodando o Backend (Node.js)
 No terminal dentro da pasta /server-adm, rode:
 
-node server.js
+npm start
 
 

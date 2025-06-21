@@ -1,100 +1,136 @@
-/* Reset básico */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: sans-serif;
-}
+ * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
-body {
-  background-color: #f6e8c3;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 10px;
-}
+    html, body {
+      height: 100%;
+      background-color: #fffaf4;
+    }
 
-/* Container principal */
-.container {
-  width: 450px;
-  max-width: 500px;
-  background-color: #f4f4f4;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  overflow: hidden;
-}
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
 
-/* Imagem no topo */
-.imagem-topo {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-}
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
 
-.imagem-topo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+    .imagem-topo {
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+    }
 
-/* Área do formulário */
-.formulario {
-  background-color: white;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: center;
-}
+    .imagem-topo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
-/* Título */
-.formulario h2 {
-  font-size: 1.3rem;
-  color: #333;
-}
+    .formulario {
+      background-color: white;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-/* Labels */
-label {
-  font-weight: bold;
-  font-size: 14px;
-  align-self: flex-start;
-}
+    .formulario h2 {
+      font-size: 1.5rem;
+      color: #5e3c24;
+      font-family: Georgia, serif;
+      text-align: center;
+      margin-bottom: 10px;
+    }
 
-/* Inputs */
-input[type="email"],
-input[type="password"] {
-  width: 100%;
-  border: none;
-  border-bottom: 2px solid #000;
-  padding: 6px 4px;
-  font-size: 14px;
-  background-color: transparent;
-  margin-bottom: 14px;
-}
+    label {
+      font-weight: bold;
+      font-size: 14px;
+      color: #5e3c24;
+      margin-top: 8px;
+    }
 
-/* Botão */
-button {
-  width: 100%;
-  background-color: #cc9966;
-  color: white;
-  border: none;
-  padding: 10px;
-  font-size: 1rem;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-  cursor: pointer;
-  margin-top: 10px;
-}
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      padding: 12px 16px;
+      font-size: 14px;
+      background-color: #fff;
+      margin-bottom: 12px;
+    }
 
-button:hover {
-  background-color: #b57f4f;
-}
+    input::placeholder {
+      color: #999;
+    }
 
-/* Mensagem de erro */
-.erro {
-  color: red;
-  font-size: 13px;
-  text-align: center;
-}
+    input:focus {
+      outline: none;
+      border-color: #5e3c24;
+      box-shadow: 0 0 0 2px #e9d7c1;
+    }
+
+    button {
+      width: 250px;          
+      background-color: #c49b7e;
+      color: white;
+      border: none;
+      padding: 10px 0;
+      font-size: 0.95rem;
+       font-weight: 700;  
+      border-radius: 25px;
+      transition: background-color 0.3s;
+      cursor: pointer;
+      margin: 16px auto 0;     
+      display: block;          
+    }
+
+    button:hover {
+      background-color: #b78d71;
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: wait;
+    }
+
+    .erro {
+      color: red;
+      font-size: 13px;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        margin: 0 10px;
+      }
+
+      .formulario h2 {
+        font-size: 1.3rem;
+      }
+
+      input {
+        font-size: 16px;
+      }
+
+      button {
+        font-size: 1rem;
+        width: 130px;           
+      }
+    }

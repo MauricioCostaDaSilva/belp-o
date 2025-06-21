@@ -29,9 +29,8 @@ CREATE TABLE `produto` (
   `categoria` VARCHAR(150) NOT NULL,
   `nome` VARCHAR(255) NOT NULL,
   `descricao` TEXT NOT NULL,
-  `valor` DECIMAL(10, 2) NOT NULL,
+  `preco` DECIMAL(10, 2) NOT NULL,
   `imagem` LONGBLOB,
-  CONSTRAINT `fk_usuario_produto` FOREIGN KEY (`usuario_id`) REFERENCES `usuario`(`id`) ON DELETE SET NULL
 );
 
 CREATE TABLE `pedido` (

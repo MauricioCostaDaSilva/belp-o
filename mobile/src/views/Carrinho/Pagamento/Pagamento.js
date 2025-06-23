@@ -24,7 +24,7 @@ const Pagamento = () => {
 
       const supported = await Linking.canOpenURL("whatsapp://send")
       const url = new URL(supported ? 'whatsapp://send' : 'https://api.whatsapp.com/send')
-      url.searchParams.set('phone', '5521984507441')
+      url.searchParams.set('phone', '5541992476386') // Número do WhatsApp da padaria com DDI e DDD
       url.searchParams.set('text', `
         *Pedido do App:*\n\n`
         + carrinho.map(item => `- ${item.nome} (R$ ${item.preco.toFixed(2)} x ${item.quantidade})`).join('\n') + `\n\n`

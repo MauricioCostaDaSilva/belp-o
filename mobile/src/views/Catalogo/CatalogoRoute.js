@@ -69,9 +69,12 @@ export default function CatalogoRoute() {
     fetchProdutos()
   }, [])
 
-  const produtosFiltrados = produtos.filter(produto =>
-    produto.nome.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+ const normalizarTexto = texto =>
+  texto?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim()
+
+const produtosFiltrados = produtos.filter(produto =>
+  normalizarTexto(produto.nome).includes(normalizarTexto(searchQuery))
+)
 
 
   return (

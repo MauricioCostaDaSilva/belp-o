@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Text, ScrollView, Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Appbar, Button, Card, Searchbar } from 'react-native-paper'
+import { Button, Card } from 'react-native-paper'
 import { useNavigate } from 'react-router-native'
 import { Linking } from 'react-native'
 
@@ -9,39 +9,52 @@ const Pagamento = () => {
   const [carrinho, setCarrinho] = useState([])
   const navigate = useNavigate()
 
+  // Carrega o carrinho do AsyncStorage e garante que o campo imagem existe
   const carregaCarrinho = async () => {
     try {
       const data = await AsyncStorage.getItem('carrinho')
-      setCarrinho(data ? JSON.parse(data) : [])
+      const carrinhoParse = data ? JSON.parse(data) : []
+
+      // Garantir que cada item tenha o campo imagem (mesmo que vazio ou padrão)
+      const carrinhoComImagem = carrinhoParse.map(item => ({
+        ...item,
+        imagem: item.imagem
+          ? item.imagem.startsWith('http')
+            ? item.imagem
+            : `https://seuservidor.com/imagens/${item.imagem}` // ajuste conforme sua base de imagens
+          : 'https://via.placeholder.com/120', // imagem padrão caso não exista
+      }))
+
+      setCarrinho(carrinhoComImagem)
     } catch (error) {
       console.error("Erro ao carregar o carrinho:", error)
       setCarrinho([])
     }
   }
 
+  // Função para finalizar pedido e enviar via WhatsApp
   const finalizarPedido = async () => {
     try {
-
       const supported = await Linking.canOpenURL("whatsapp://send")
       const url = new URL(supported ? 'whatsapp://send' : 'https://api.whatsapp.com/send')
-      url.searchParams.set('phone', '5541992476386') // Número do WhatsApp da padaria com DDI e DDD
-      url.searchParams.set('text', `
-        *Pedido do App:*\n\n`
-        + carrinho.map(item => `- ${item.nome} (R$ ${item.preco.toFixed(2)} x ${item.quantidade})`).join('\n') + `\n\n`
-        + `*Total: R$ ${calcularTotal()}*\n\n`
-        + `Por favor, confirme o pedido e informe o endereço de entrega.`
+      url.searchParams.set('phone', '5541992476386') // WhatsApp da padaria com DDI e DDD
+      url.searchParams.set(
+        'text',
+        `*Pedido do App:*\n\n` +
+          carrinho
+            .map(item => `- ${item.nome} (R$ ${item.preco.toFixed(2)} x ${item.quantidade})`)
+            .join('\n') +
+          `\n\n*Total: R$ ${calcularTotal()}*\n\n` +
+          `Por favor, confirme o pedido e informe o endereço de entrega.`
       )
 
       console.info(`WhatsApp URL: ${url.toString()}`)
-
-
       await Linking.openURL(url.toString())
 
       await AsyncStorage.removeItem('carrinho')
       setCarrinho([])
 
       navigate('/') // volta para tela inicial
-
     } catch (error) {
       Alert.alert("Erro", "Ocorreu um erro ao finalizar o pedido.")
     }
@@ -56,7 +69,7 @@ const Pagamento = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}></Text>
+      <Text style={styles.titulo}>Resumo do Pedido</Text>
 
       <Button mode="outlined" onPress={carregaCarrinho} style={styles.botaoAtualizar}>
         Atualizar Carrinho
@@ -68,6 +81,9 @@ const Pagamento = () => {
         ) : (
           carrinho.map((item, index) => (
             <Card key={index} style={styles.card}>
+              {item.imagem && (
+                <Card.Cover source={{ uri: item.imagem }} style={styles.imagem} />
+              )}
               <Card.Title title={item.nome} />
               <Card.Content>
                 <Text>Preço: R$ {item.preco.toFixed(2)}</Text>
@@ -113,6 +129,10 @@ const styles = StyleSheet.create({
   card: {
     marginBottom: 12,
     backgroundColor: '#F5E1D5',
+  },
+  imagem: {
+    height: 120,
+    resizeMode: 'cover',
   },
   vazio: {
     textAlign: 'center',

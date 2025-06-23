@@ -1,6 +1,6 @@
 // deve informar o endereço correto do servidor
-const baseURL = new URL("http://192.168.1.2:3000")
-export const admWEB = new URL ("http://192.168.1.2:3001") 
+const baseURL = new URL("http://192.168.200.18:3000")
+export const admWEB = new URL ("http://192.168.200.18:3001")
 /**
  * Função para obter o token de autenticação do usuário
  *

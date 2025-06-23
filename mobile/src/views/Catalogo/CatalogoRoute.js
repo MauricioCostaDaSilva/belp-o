@@ -48,7 +48,6 @@ export default function CatalogoRoute() {
     } catch (error) {
       console.log("Erro ao remover produto do carrinho:", error);
 
-
     }
 
   }
@@ -73,7 +72,7 @@ export default function CatalogoRoute() {
   const produtosFiltrados = produtos.filter(produto =>
     produto.nome.toLowerCase().includes(searchQuery.toLowerCase())
   )
-  
+
 
   return (
     <>
@@ -85,24 +84,9 @@ export default function CatalogoRoute() {
         <Appbar.Action
           icon="logout"
           onPress={() => {
+            navigate('/logout')
 
-            Alert.alert(
-              'Sair do aplicativo',
-              'Você tem certeza que deseja sair?',
-              [
-                {
-                  text: 'Não',
-                  style: 'cancel',
-                },
-                {
-                  text: 'Sim',
-                  onPress: () => {
-                    navigate('/logout')
-                  },
-                },
-              ],
-              { cancelable: true }
-            );
+
           }}
         />
 
@@ -116,7 +100,7 @@ export default function CatalogoRoute() {
         />
         {produtosFiltrados.map(produto => {
           const isInCarrinho = carrinho.find(item => item.id === produto.id)
-          
+
           return (
             <Card
               style={{ marginBottom: 20 }}
@@ -166,15 +150,7 @@ export default function CatalogoRoute() {
       </ScrollView>
       {carrinho.length > 0 && (
         <View>
-          <Button
-            icon="cart"
-            mode="contained"
-            onPress={toggleCarrinhoVisible}
-            style={{ position: 'absolute', bottom: 20, right: 20, backgroundColor: '#ff6347' }}
-            labelStyle={{ fontWeight: 'bold' }}
-          >
-            Carrinho ({carrinho.reduce((total, item) => total + item.quantidade, 0)})
-          </Button>
+
 
         </View>
       )}

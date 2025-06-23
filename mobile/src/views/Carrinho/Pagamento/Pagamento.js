@@ -37,7 +37,7 @@ const Pagamento = () => {
     try {
       const supported = await Linking.canOpenURL("whatsapp://send")
       const url = new URL(supported ? 'whatsapp://send' : 'https://api.whatsapp.com/send')
-      url.searchParams.set('phone', '5541992476386') // WhatsApp da padaria com DDI e DDD
+      url.searchParams.set('phone', '5521970127661') // WhatsApp da padaria com DDI e DDD
       url.searchParams.set(
         'text',
         `*Pedido do App:*\n\n` +

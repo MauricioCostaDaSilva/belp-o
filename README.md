@@ -1,20 +1,20 @@
-# belp-o
+# 🥖 belp-o
 
- Bem-vindo ao repositório oficial do **BelPão**, o aplicativo da nossa padaria que conecta tradição e tecnologia para tornar sua experiência mais deliciosa e prática. Aqui você pode visualizar o cardápio, fazer pedidos, agendar retiradas e até receber em casa os melhores pães da cidade!
+Bem-vindo ao repositório oficial do **BelPão**, o aplicativo da nossa padaria que conecta tradição e tecnologia para tornar sua experiência mais deliciosa e prática. Aqui você pode visualizar o cardápio, fazer pedidos, agendar retiradas e até receber em casa os melhores pães da cidade!
 
- ## 👨‍🍳 Sobre a BelPão
+---
+
+## 👨‍🍳 Sobre a BelPão
+
 A Padaria BelPão é referência em qualidade e sabor desde 2024. Com o aplicativo, buscamos oferecer a mesma excelência da loja física em uma experiência digital intuitiva, prática e aconchegante — como o cheirinho de pão quente pela manhã. 🍞✨
 
-
-````
 ---
 
 ## 📱 Funcionalidades
 
-- 🥐 **Cardápio digital** com fotos e descrição dos produtos
-- 🛒 **Pedidos online** com opção de entrega ou retirada
-- 💳 **Pagamento integrado** via PIX, cartão ou na retirada
-
+- 🥐 **Cardápio digital** com fotos e descrição dos produtos  
+- 🛒 **Pedidos online** com opção de entrega ou retirada  
+- 💳 **Pagamento integrado** via PIX, cartão ou na retirada  
 
 ---
 
@@ -22,11 +22,13 @@ A Padaria BelPão é referência em qualidade e sabor desde 2024. Com o aplicati
 
 > Adapte de acordo com o stack real do projeto.
 
-- Frontend: React Native / Flutter
-- Backend: Node.js / Express
-- Banco de dados: MySQL, knex.js
-- Autenticação: JWT (JSON Web Token)
-- Integrações: Firebase, API de pagamento 
+- Frontend: React Native / Flutter  
+- Backend: Node.js / Express  
+- Banco de dados: MySQL, knex.js  
+- Autenticação: JWT (JSON Web Token)  
+- Integrações: Firebase, API de pagamento  
+
+---
 
 ## 🛠️ Como rodar o projeto localmente
 
@@ -34,37 +36,47 @@ A Padaria BelPão é referência em qualidade e sabor desde 2024. Com o aplicati
 # Clone o repositório
 git clone https://github.com/MauricioCostaDaSilva/belp-o
 
+# Instale as dependências do backend
+cd belp-o/server
+npm install
 
-# Instale as dependências
+# Inicie o servidor
+npm start
+```
 
-cd belp-o/mobile/ npm install
+```bash
+# Em outro terminal, instale as dependências do app mobile
+cd belp-o/mobile
+npm install
 
-cd belp-o/server/ npm install
+# Inicie o app com Expo
+npx expo start
+```
 
-#inicie o server
+---
 
-cd bel-o/server/npm start
+## 📐 Diagrama de arquitetura
 
-# Inicie a aplicação
-
-cd bel-o/mobile/ npx expo start
-
-
-## Diagrama de arquitetura
-
-````mermaid
+```mermaid
 flowchart LR
-  adm["Area administrativa"] --> microservice["API"]
-  app["Aplicativo Mobile"] --> microservice["API"]
-  microservice --> database(MySQL)
+  adm["Área administrativa"] --> microservice["API"]
+  app["Aplicativo Mobile"] --> microservice
+  microservice --> database["MySQL"]
+```
+
+---
 
 ## 📦 Dependências
 
-Certifique-se de ter as seguintes bibliotecas instaladas:
+Certifique-se de ter as seguintes bibliotecas instaladas no projeto mobile:
 
 ```bash
 npm install @react-native-async-storage/async-storage react-native-paper react-router-native
+```
 
+**Estrutura de arquivos:**
+
+```
 src/
 ├── api/
 │   └── index.js         # Contém a função getToken()
@@ -72,25 +84,14 @@ src/
 │   └── Login.js         # Este componente
 assets/
 └── fundo.jpeg           # Imagem de fundo usada no topo
+```
 
-
-
-
+---
 
 ## 🤝 Contribuição
 
-  [Diego Matos](https://github.com/dazevedoti)
-
-  [Jessica Carvalho](https://github.com/Jcaroliver02)
-
-
-  [Juan Dos Anjos](https://github.com/juananjos)
- 
-  [Mauricio Costa](https://github.com/MauricioCostaDaSilva)
-
-  [Yan Silva](https://github.com/YanS2D
- 
-
- 
-
-
+- [Diego Matos](https://github.com/dazevedoti)  
+- [Jessica Carvalho](https://github.com/Jcaroliver02)  
+- [Juan Dos Anjos](https://github.com/juananjos)  
+- [Mauricio Costa](https://github.com/MauricioCostaDaSilva)  
+- [Yan Silva](https://github.com/YanS2D)
